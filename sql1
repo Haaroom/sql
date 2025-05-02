@@ -54,4 +54,47 @@ select name from employees_2023 except select name from employees_2024;
 select product_id,product_name from produsct_sales_2023 intersect select product_id,product_name from produsct_sales_2024 ;
 /*sql set operation -5 */
 select name, skill from applicants except  name, skill from employee ;
+/*sql windows -1*/
+SELECT employee_id, ROW_NUMBER() OVER (ORDER BY salary DESC) AS row_num FROM employees;
+/*sql windows -2*/
+SELECT employee_id, department, salary,  RANK() OVER (PARTITION BY department ORDER BY salary DESC) AS rank FROM employees;
+/*sql windows -3*/
+SELECT employee_id, department, salary  DENSE_RANK() OVER (PARTITION BY department ORDER BY salary DESC) AS rank FROM employees;
+/*sql windows -4*/
+SELECT sales_id, product_id, amount,  LEAD(amount) OVER (PARTITION BY product_id ORDER BY sale_date) AS next_sale_amount FROM sales;
+/*sql windows -5*/
+SELECT employee_id, salary,  NTILE(4) OVER (ORDER BY salary DESC) AS salary_group FROM employees;
+/*sql data modification - 1*/
+INSERT INTO products (product_id, product_name, price) VALUES (5, 'p1', 5000), (6, 'p2', 709), (7, 'p3', 859);
+/*sql data modification - 2*/
+UPDATE employees SET salary = salary * 1.1 WHERE EXTRACT(YEAR FROM hire_date) < 2020;
+/*sql data modification - 3*/
+delete  from orders where total_amount < 100 and order_date <'2022-1-1';
+/*sql data modification - 4*/
+update products set price where product_id in ((select product_id from products) and (select product_id from new_products)) 
+insert into product where select product_id from products not in (select product_id from new_products);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
