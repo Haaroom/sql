@@ -71,28 +71,9 @@ UPDATE employees SET salary = salary * 1.1 WHERE EXTRACT(YEAR FROM hire_date) < 
 /*sql data modification - 3*/
 delete  from orders where total_amount < 100 and order_date <'2022-1-1';
 /*sql data modification - 4*/
-update products set price where product_id in ((select product_id from products) and (select product_id from new_products)) 
-insert into product where select product_id from products not in (select product_id from new_products);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+merge products as p using new_products as np on p.product_id=np.product_id when matched p.price =np.price when not matched insert into product(product_id, price) value (np.product_id, np.price) ;
+/*sql data modification -5*/
+UPDATE employees e JOIN bonuses b ON e.department = b.department SET e.salary = e.salary + (e.salary * b.bonus_percent / 100);
 
 
 
