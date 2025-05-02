@@ -1,0 +1,57 @@
+/* sql small project -1 */
+select employee_id, name, department_id, salary, hire_date from employee as e  where salary > (select avg(salary) from employee where department_id= e.department_id) and cast(strftime(%Y ,hire_date) as int) > 2020;
+/* sql small project - 2*/
+SELECT TOP 3 product_id, SUM(sale_amount) AS total_sales FROM sales WHERE sale_date >= DATEADD(DAY, -30, GETDATE()) GROUP BY product_id ORDER BY total_sales DESC;
+/* sql small project -3*/
+select emloyee_id,hire_date,department from employee e where hire_date=( select MAX(hire_date) from employee where department=e.department);
+/*sql basic - 1*/
+select name from students where city='mumbai";
+/*sql basic -2*/
+select * from products where category ="electronics";
+/*sql basic - 3*/
+select employee_id from employee where salary > 50000;
+/*sql basic - 4*/
+select order_id ,total_amount from orders where caste(strftime(%Y,order_date),int) > 2023 ;
+/*sql basic -5*/
+select name , age from students where grade in ('A','B');  /* A or B */
+/*sql joins and relationships -1*/
+select e.employee_name ,d.department_name  from employees as e  join departments as d on e.department_id = d.department_id;
+/*sql joins and relationships - 2*/
+select c.customer_name as customer name ,o.total_amount as total amount from orders o left join customers c on o.customer_id=c.customer_id ;
+/*sql joins and relationships - 3*/
+select e.employee_name,e.salary from employees e join departments d on e.department_id =d.department_id where d.department_name ="sales";
+/*sql joins and relationships - 4*/
+select c.customer_name from orders o join customers c on c.customer_id = o.customer_id where o.order_date is not null ; 
+/*sql joins and relationships - 5*/
+select s.name from students s left join courses c on s.course_id=c.course_id where c.course_name='Mathematics';
+/*sql aggregation and grouping - 1*/
+select SUM(sale_amount) as total_sales ,product_id  from sales group by product_id ; 
+/*sql aggregation and grouping - 2*/
+select AVG(salary),department from employees group by department_id;
+/*sql aggregation and grouping - 3*/
+select MAX(s.order_amount) as total order , s.customer_name as customer name from orders o join sales s on o.customer_id=s.customer_id groupby s.customer_name ;
+/*sql aggregation and grouping - 4*/
+select COUNT(*) from students group by course ;
+/*sql aggregation and grouping - 5*/
+select count(*) as employee count , year(hire_date) as year  from employees group by name having year(hire_date) >= year(GETDATE())-1  ;
+/*sql subqueries - 1 */
+select name from employees where salary > (select AVG(salary) from employees);
+/*sql subqueries - 2 */
+select s.name from students s join courses c on c.course_id = s.course_id where course in ( select course_id from students where (select count(*) from students group by course_id ) > 50 ); 
+/*sql subqueries - 3*/
+select TOP 1 SUM(total_amount),order_id from orders group by order_id order by total_amount desc ;
+/*sql subqueries -4 */
+select  e.department,e.employee_name  from employees e where e.salary = ( select MAX(salary) from employees where department=e.department) ; 
+/*sql subqueries - 5 */
+select p.product_name,p.price  from products p  where p.price > (select AVG(price) from products where product=p.product);
+/*sql set operaton - 1*/
+select employee_name from employees where department in ('marketing' or  'sales') group by employee_id having COUNT(distinct department) = 1;
+/*sql set operaton - 2*/
+select product_name from sales where sales_type in ('online_sales','store-sales') group by product_name having COUNT(distinct sales_type)= 1;
+/*sql set operaton - 3*/
+select name from employees_2023 except select name from employees_2024;
+/*sql set operation -4 */
+select product_id,product_name from produsct_sales_2023 intersect select product_id,product_name from produsct_sales_2024 ;
+/*sql set operation -5 */
+select name, skill from applicants except  name, skill from employee ;
+
