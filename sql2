@@ -1,0 +1,5 @@
+/*sql advanced*/
+/*procedure-1*/
+create procedure hire(in name txt non null ,in salary int default 300000,in department_id int) begin insert into  employees(name,salary,department_id) values (name,salary,department_id) end ;
+/*procedure-2*/
+create procedure apply_bonus(in department_id int not null , in bonus_pct int not null) begin update employees e set salary=salary*(1+bonus_pct/100) where e.department_id =department_id end ; 
