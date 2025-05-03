@@ -74,7 +74,26 @@ delete  from orders where total_amount < 100 and order_date <'2022-1-1';
 merge products as p using new_products as np on p.product_id=np.product_id when matched p.price =np.price when not matched insert into product(product_id, price) value (np.product_id, np.price) ;
 /*sql data modification -5*/
 UPDATE employees e JOIN bonuses b ON e.department = b.department SET e.salary = e.salary + (e.salary * b.bonus_percent / 100);
-
+/*sql table and schema management-1*/
+create table employees (employee_id int primary key , name text not null   , email text unique , salary int default 30000 , department_id int ,foreign key(department_id) reference department(department_id));
+/*sql table and schema management -2*/
+alter table employees add column hire_date date not null  ;
+/*sql table and schema management -3 */
+create table departments (department_id int primary key ,  department_name text unique ) alter table employees add constraint department_id  foreign key(department_id) references departments(department_id) ;
+/*sql table and schema management - 4*/
+alter table employee add contraint salary_check check salary >=10000;
+/*sql table and schema management - 5*/
+create table project (project_id int primary key , project_name unique text ,start_date date not null,budjet int default 100000 (check budject > = 50000));
+/*sql indexes and table - 1 */
+CREATE TABLE employees (employee_id INT PRIMARY KEY, name TEXT, department_id INT ,salary INT );CREATE INDEX idx_department_id ON employees (department_id);
+/*sql indexes and table - 2*/
+create index salary on employees(salary);
+/*sql indexes and table - 3*/
+create view high_salary_employee select employee_id,name,salary from employees where salary > 50000;
+/*sql indexes and table - 4*/
+create view department_salary_summary as select department_id,AVG(salary) from employees group by department ;
+/*sql indexes and table - 5*/
+create or replace view department_salary_summary as select AVG(salary),COUNT(employees),department_id from employee group by department ;  
 
 
 
