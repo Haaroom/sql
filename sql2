@@ -3,3 +3,11 @@
 create procedure hire(in name txt non null ,in salary int default 300000,in department_id int) begin insert into  employees(name,salary,department_id) values (name,salary,department_id) end ;
 /*procedure-2*/
 create procedure apply_bonus(in department_id int not null , in bonus_pct int not null) begin update employees e set salary=salary*(1+bonus_pct/100) where e.department_id =department_id end ; 
+/* transcation -1 */
+begin update employees set salary = salary * 1.1 where department='Engineering' rollback  begin update employees set salary = salary * 1.1 where department='Hr' commit;
+/* transcation -2 */
+BEGIN UPDATE accounts SET balance = balance - 300 WHERE account_id = 201; UPDATE accounts SET balance = balance + 300 WHERE account_id = 202; SAVEPOINT before_bonus; UPDATE accounts SET balance = balance + 50 WHERE account_id = 202; ROLLBACK TO before_bonus; COMMIT;
+/*cte - 1*/
+select name,department,salary from (select name,department,salary, ROW NUMBER() OVER (PARTITION BY department order by desc ) as rn  from employees) where rn=1 ;
+/*cte - 2*/
+create temporary table temp_table as select name,department,salary where department = 'IT'; update temp_table set salary=salary*1.1 ; select * from temp_table;
