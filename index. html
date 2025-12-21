@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>HI BROS</title>
+
+  <style>
+    body {
+      height: 100vh;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      font-family: Arial, Helvetica, sans-serif;
+      color: white;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 30px;
+      border-radius: 12px;
+      width: 300px;
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    }
+
+    h2 {
+      margin-bottom: 20px;
+      letter-spacing: 1px;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border-radius: 6px;
+      border: none;
+      outline: none;
+      font-size: 14px;
+    }
+
+    button {
+      width: 100%;
+      padding: 10px;
+      border: none;
+      border-radius: 6px;
+      background: #ff4b2b;
+      color: white;
+      font-size: 15px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background: #ff1e00;
+    }
+
+    p {
+      margin-top: 15px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="card">
+    <h2>Magic Age 🔮</h2>
+
+    <input type="text" id="name" placeholder="Enter your name" required>
+    <input type="number" id="age" placeholder="Enter your age" required>
+
+    <button onclick="magic()">Magic</button>
+
+    <p id="p"></p>
+  </div>
+
+  <script>
+    function magic() {
+      const name = document.getElementById('name').value;
+      const age = Number(document.getElementById('age').value);
+
+      if (!name || !age) {
+        document.getElementById('p').textContent = "Fill all fields properly!";
+        return;
+      }
+
+      document.getElementById('p').textContent =
+        `Hey ${name}, your age after 5 years will be ${age + 5}`;
+    }
+  </script>
+
+</body>
+</html>
